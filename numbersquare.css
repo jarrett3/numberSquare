@@ -1,0 +1,17 @@
+/* CSS declarations go here */
+button {
+	height: 250px;
+	width: 250px;
+	margin-right: -4px;
+}
+
+button.b_restart {
+	height: 10%;
+	width: 15%;
+}
+
+div.f_lost {
+	height: 50%;
+	width: 50%;
+	position: relative;
+}
