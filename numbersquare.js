@@ -1,31 +1,25 @@
 if (Meteor.isClient) {
   // counter starts at 0
   Session.setDefault('counter', 0);
-  var i = 0;
-  var d_timer = Session.setDefault('timer', 10);
+  Session.setDefault('timer', 10);
 
-  // Meteor.methods({
-  //   nextQ: function () {
-  //     alert("you're Right!!!");
-  //     Session.set('Num1', Math.floor(Math.random() * 15) + 1);
-  //     var N1 = Session.get('Num1')
-  //     Session.set('Num2', Math.floor(Math.random() * 15) + 1);
-  //     var N2 = Session.get('Num2')
-  //     Session.set('timer', d_timer);
-  //     Session.set('counter', d_counter);
-  //   }
-  // });
+  Meteor.methods({
+    'setN1': function () {
+      Session.set('Num1', Math.floor(Math.random() * 15) + 1 );
+    },
+    'setN2': function () {
+      Session.set('Num2', Math.floor(Math.random() * 15) + 1 );
+    }
+  });
 
   Template.body.helpers({
     Num1: function () {
-      Session.set('Num1', Math.floor(Math.random() * 15) + 1 );
-      var N1 = Session.get('Num1')
-      return N1
+      Meteor.call('setN1')
+      return Session.get('Num1')
     },
     Num2: function () {
-      Session.set('Num2', Math.floor(Math.random() * 15) + 1 );
-      var N2 = Session.get('Num2')
-      return N2
+      Meteor.call('setN2')
+      return Session.get('Num2')
     },
     counter: function () {
       return Session.get('counter');
@@ -35,13 +29,22 @@ if (Meteor.isClient) {
     },
     YN: function () {
       if (Session.get('counter') === Session.get('Num1') + Session.get('Num2')) {
-        return "Correct"}
-        else {
-          return "Wrong"
+        return "Correct"
+      }
+      else {
+        return "Wrong"
       }
     },
     timer: function () {
       var timeInc = setTimeout(function() { Session.set('timer', Session.get('timer') - 1)}, 1000)
+
+      // if (Session.get('counter') === Session.get('Num1') + Session.get('Num2') && Session.get('timer') > 0) {
+      //   return Session.getDefault('timer') ;
+      // }
+      // else {
+      //   return Session.get('timer')
+      // }
+
       if (Session.get('timer') <= 0) {
         clearTimeout(timeInc)
       }
