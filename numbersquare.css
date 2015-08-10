@@ -1,5 +1,23 @@
 /* CSS declarations go here */
-button {
+button.button1 {
+	height: 250px;
+	width: 250px;
+	margin-right: -4px;
+}
+
+button.button2 {
+	height: 250px;
+	width: 250px;
+	margin-right: -4px;
+}
+
+button.button3 {
+	height: 250px;
+	width: 250px;
+	margin-right: -4px;
+}
+
+button.button4 {
 	height: 250px;
 	width: 250px;
 	margin-right: -4px;

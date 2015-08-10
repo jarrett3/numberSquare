@@ -1,24 +1,24 @@
 if (Meteor.isClient) {
   // counter starts at 0
-  Session.setDefault('counter', 0);
-  Session.setDefault('timer', 10);
+  Meteor.subscribe('userData');
 
-  Meteor.methods({
-    'setN1': function () {
-      Session.set('Num1', Math.floor(Math.random() * 15) + 1 );
-    },
-    'setN2': function () {
-      Session.set('Num2', Math.floor(Math.random() * 15) + 1 );
-    }
+  Accounts.ui.config ({
+    passwordSignupFields: 'USERNAME_ONLY'
   });
 
-  Template.body.helpers({
+  Session.setDefault('counter', 0);
+  Session.set('myTimer', 0);
+  Session.set('Num1', Math.floor(Math.random() * 15) + 1 );
+  Session.set('Num2', Math.floor(Math.random() * 15) + 1 );
+
+  Template.main.helpers({
+    user: function () {
+      return Meteor.user();
+    },
     Num1: function () {
-      Meteor.call('setN1')
       return Session.get('Num1')
     },
     Num2: function () {
-      Meteor.call('setN2')
       return Session.get('Num2')
     },
     counter: function () {
@@ -35,53 +35,109 @@ if (Meteor.isClient) {
         return "Wrong"
       }
     },
-    timer: function () {
-      var timeInc = setTimeout(function() { Session.set('timer', Session.get('timer') - 1)}, 1000)
-
-      // if (Session.get('counter') === Session.get('Num1') + Session.get('Num2') && Session.get('timer') > 0) {
-      //   return Session.getDefault('timer') ;
-      // }
-      // else {
-      //   return Session.get('timer')
-      // }
-
-      if (Session.get('timer') <= 0) {
-        clearTimeout(timeInc)
+    myTimer: function () {
+      if (Session.get('myTimer') === 0 || Session.get('counter') > Session.get('Num1') + Session.get('Num2')) {
+        Meteor.clearInterval(rTimer);
+        Session.set('myTimer', 0)
+        $("button.start").show();
+        Session.set('counter', 0);
       }
       else {
-        return Session.get('timer')
+        return Session.get('myTimer') + " Seconds"
       }
     }
   });
 
-  Template.body.events({
-    'solution check': function () {
-      // Check to see if the counter reaches the solution
-    }
-  });
+  // Function to subtract 1 second from timer
+  function sTimer() {
+    Session.set('myTimer', Session.get('myTimer') - 1)
+  }
 
   Template.buttons.events({
+    'click .start': function () {
+      // Reset timer to 10 seconds
+      Session.set('myTimer', 10);
+      // Begin timer loop on click
+      rTimer = Meteor.setInterval(sTimer, 1000);
+      // Hide start button on click
+      $("button.start").hide();
+    },
     'click .button1': function () {
       // increment the counter by 1 when button is clicked
-      Session.set('counter', Session.get('counter') + 1);
+      if (Session.get('myTimer') > 0) {
+        Session.set('counter', Session.get('counter') + 1);
+      }
+      if (Session.get('counter') === Session.get('Num1') + Session.get('Num2') && Session.get('myTimer') > 0) {
+        Meteor.call('setNums');
+        Session.set('counter', 0);
+        Session.set('myTimer', 10);
+        Meteor.call('incPoints');
+      }
     },
     'click .button2': function () {
       // increment the counter by 2 when button is clicked
-      Session.set('counter', Session.get('counter') + 2);
+      if (Session.get('myTimer') > 0) {
+        Session.set('counter', Session.get('counter') + 2);
+      }
+      if (Session.get('counter') === Session.get('Num1') + Session.get('Num2') && Session.get('myTimer') > 0) {
+        Meteor.call('setNums');
+        Session.set('counter', 0);
+        Session.set('myTimer', 10);
+        Meteor.call('incPoints');
+      }
     },
     'click .button3': function () {
       // increment the counter by 3 when button is clicked
-      Session.set('counter', Session.get('counter') + 3);
+      if (Session.get('myTimer') > 0) {
+        Session.set('counter', Session.get('counter') + 3);
+      }
+      if (Session.get('counter') === Session.get('Num1') + Session.get('Num2') && Session.get('myTimer') > 0) {
+        Meteor.call('setNums');
+        Session.set('counter', 0);
+        Session.set('myTimer', 10);
+        Meteor.call('incPoints');
+      }
     },
     'click .button4': function () {
       // increment the counter by 4 when button is clicked
-      Session.set('counter', Session.get('counter') + 4);
+      if (Session.get('myTimer') > 0) {
+        Session.set('counter', Session.get('counter') + 4);
+      }
+      if (Session.get('counter') === Session.get('Num1') + Session.get('Num2') && Session.get('myTimer') > 0) {
+        Meteor.call('setNums');
+        Session.set('counter', 0);
+        Session.set('myTimer', 10);
+        Meteor.call('incPoints');
+      }
     }
   });
-}
+};
 
 if (Meteor.isServer) {
+
+  Meteor.publish("userData", function () {
+    return Meteor.users.find({}, {sort: {'score': -1}});
+  });
+
+  Accounts.onCreateUser(function (options, user) {
+    user.score = 0;
+    user.clicks = 0;
+    return user;
+  })
+
+
   Meteor.startup(function () {
     // code to run on server at startup
+
   });
-}
+};
+
+Meteor.methods({
+  setNums: function () {
+    Session.set('Num1', Math.floor(Math.random() * 15) + 1 );
+    Session.set('Num2', Math.floor(Math.random() * 15) + 1 );
+  },
+  incPoints: function () {
+    Meteor.users.update({_id: this.userId}, {$inc: {'score': 1}});
+  }
+});

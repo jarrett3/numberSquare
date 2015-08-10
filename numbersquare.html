@@ -1,36 +1,29 @@
 <head>
-  <title>colonize</title>
+  <title>Number Square</title>
 </head>
 
 <body>
-  <div>
-    <p>{{Num1}} + {{Num2}} = {{counter}}</p>
-    <p>Here is the solution --> {{solution}}</p>
-    <p>Your answer is --> {{YN}}</p>
-    <p>{{timer}}</p>
-  </div>
-  <div>
-    {{> buttons}}
-  </div>
-
-<!--   {{> lostGame}} -->
-
+  <h1>Number Square</h1>
+  {{> loginButtons}}
+  <br><br>
+  {{> main}}
 </body>
 
+<template name="main">
+  <p>{{Num1}} + {{Num2}} = {{counter}}</p>
+  <p>Score: {{user.score}}</p>
+  <p>Here is the solution --> {{solution}}</p>
+  <p>Your answer is --> {{YN}}</p>
+  <p>{{myTimer}}</p>
+  {{> buttons}}
+</template>
+
 <template name="buttons">
+  <button class="start btn span12">Start!</button>
+  <br>
   <button class="button1">1</button>
   <button class="button2">2</button>
   <br class="padder">
   <button class="button3">3</button>
   <button class="button4">4</button>
 </template>
-<template name="MathQ">
-
-</template>
-<!-- <template name="lostGame">
-  <div id="lost" class="f_lost">
-    <p>You have lost!</p>
-    <p>Your score is {{score}}</p>
-    <button class="b_restart">Restart</button>
-  </div>
-</template> -->
