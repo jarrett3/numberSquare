@@ -27,14 +27,6 @@ if (Meteor.isClient) {
     solution: function () {
       return Session.get('Num1') + Session.get('Num2');
     },
-    YN: function () {
-      if (Session.get('counter') === Session.get('Num1') + Session.get('Num2')) {
-        return "Correct"
-      }
-      else {
-        return "Wrong"
-      }
-    },
     myTimer: function () {
       if (Session.get('myTimer') === 0 || Session.get('counter') > Session.get('Num1') + Session.get('Num2')) {
         Meteor.clearInterval(rTimer);
@@ -42,9 +34,18 @@ if (Meteor.isClient) {
         $("button.start").show();
         Session.set('counter', 0);
       }
+      if (Session.get('myTimer') === 0) {
+        Meteor.call('dec1Points');
+      }
       else {
         return Session.get('myTimer') + " Seconds"
       }
+    }
+  });
+
+  Template.highScore.helpers({
+    players: function() {
+      return Meteor.users.find({}, {sort: {'score': -1}});
     }
   });
 
@@ -52,6 +53,21 @@ if (Meteor.isClient) {
   function sTimer() {
     Session.set('myTimer', Session.get('myTimer') - 1)
   }
+
+  $(function(){
+
+      // Enabling Popover Example 1 - HTML (content and title from html tags of element)
+      $("[data-toggle=popover]").popover();
+
+      // Enabling Popover Example 2 - JS (hidden content and title capturing)
+      $("#highScore_pop").popover({
+          html : true, 
+          content: function() {
+            return $('#highScore_content').html();
+          }
+      });
+
+  });
 
   Template.buttons.events({
     'click .start': function () {
@@ -73,6 +89,12 @@ if (Meteor.isClient) {
         Session.set('myTimer', 10);
         Meteor.call('incPoints');
       }
+      if (Session.get('counter') > Session.get('Num1') + Session.get('Num2')) {
+        Meteor.call('dec2Points');
+      }
+      if (Session.get('myTimer') === 0 && Session.get('counter') > 0) {
+        Meteor.call('dec1Points');
+      }
     },
     'click .button2': function () {
       // increment the counter by 2 when button is clicked
@@ -84,6 +106,9 @@ if (Meteor.isClient) {
         Session.set('counter', 0);
         Session.set('myTimer', 10);
         Meteor.call('incPoints');
+      }
+      if (Session.get('counter') > Session.get('Num1') + Session.get('Num2')) {
+        Meteor.call('dec2Points');
       }
     },
     'click .button3': function () {
@@ -97,6 +122,9 @@ if (Meteor.isClient) {
         Session.set('myTimer', 10);
         Meteor.call('incPoints');
       }
+      if (Session.get('counter') > Session.get('Num1') + Session.get('Num2')) {
+        Meteor.call('dec2Points');
+      }
     },
     'click .button4': function () {
       // increment the counter by 4 when button is clicked
@@ -108,6 +136,9 @@ if (Meteor.isClient) {
         Session.set('counter', 0);
         Session.set('myTimer', 10);
         Meteor.call('incPoints');
+      }
+      if (Session.get('counter') > Session.get('Num1') + Session.get('Num2')) {
+        Meteor.call('dec2Points');
       }
     }
   });
@@ -139,5 +170,11 @@ Meteor.methods({
   },
   incPoints: function () {
     Meteor.users.update({_id: this.userId}, {$inc: {'score': 1}});
+  },
+  dec2Points: function () {
+    Meteor.users.update({_id: this.userId}, {$inc: {'score': -2}})
+  },
+  dec1Points: function () {
+    Meteor.users.update({_id: this.userId}, {$inc: {'score': -1}})
   }
 });

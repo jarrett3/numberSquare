@@ -1,29 +1,51 @@
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Number Square</title>
 </head>
 
 <body>
-  <h1>Number Square</h1>
+  <h1 class="gameTitle"><span class="titleN">N</span>umbe<span class="titleR">r</span> <span class="titleS">S</span>quar<span class="titleE">e</span></h1>
   {{> loginButtons}}
   <br><br>
   {{> main}}
 </body>
 
 <template name="main">
+  <button type="button" class="btn btn-default" id="highScore_pop" data-placement="bottom">High Scores</button>
+
+  <!-- Highscore content -->
+  <div id="highScore_content" style="display: none">
+     <div>{{> highScore}}</div>
+  </div>
   <p>{{Num1}} + {{Num2}} = {{counter}}</p>
   <p>Score: {{user.score}}</p>
-  <p>Here is the solution --> {{solution}}</p>
-  <p>Your answer is --> {{YN}}</p>
+  
   <p>{{myTimer}}</p>
-  {{> buttons}}
+  <div class="gbuttonsdiv">
+    {{> buttons}}
+  </div>
+</template>
+
+<template name="highScore">
+  <table class="leaderboard table table-striped table-bordered">
+    <thead>
+      <th>Username</th><th>Score</th>
+    </thead>
+    {{#each players}}
+      <tr class="player">
+        <td class="name">{{username}}</td>
+        <td class="score">{{score}}</td>
+      </tr>
+    {{/each}}
+  </table>
 </template>
 
 <template name="buttons">
   <button class="start btn span12">Start!</button>
   <br>
-  <button class="button1">1</button>
-  <button class="button2">2</button>
+  <button class="button1 btn-custom1 gbuttons">1</button>
+  <button class="button2 btn-custom2 gbuttons">2</button>
   <br class="padder">
-  <button class="button3">3</button>
-  <button class="button4">4</button>
+  <button class="button3 btn-custom3 gbuttons">3</button>
+  <button class="button4 btn-custom4 gbuttons">4</button>
 </template>
