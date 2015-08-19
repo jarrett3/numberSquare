@@ -1,4 +1,11 @@
 /* CSS declarations go here */
+
+/*Primary area*/
+div.container {
+	width: 767px;
+}
+
+/*Title/Header area*/
 h1.gameTitle {
 	font-family: "Impact", Charcoal, sans-serif;
 	text-align: center;
@@ -20,6 +27,12 @@ span.titleE {
 	color: #307821;
 }
 
+div.loginB {
+	text-align: center;
+}
+
+
+/*Game buttons and start button*/
 .btn-custom1 {
   background-color: hsl(195, 60%, 35%) !important;
   background-repeat: repeat-x;
@@ -86,6 +99,14 @@ span.titleE {
   color: #fff !important;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.33);
   -webkit-font-smoothing: antialiased;
+}
+
+div.highScoreBtn {
+	text-align: center;
+}
+
+div.startSpan {
+	text-align: right;
 }
 
 button.gbuttons {
