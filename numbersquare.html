@@ -3,7 +3,7 @@
   <title>Number Square</title>
 </head>
 
-<body>
+<body class="container">
   <h1 class="gameTitle"><span class="titleN">N</span>umbe<span class="titleR">r</span> <span class="titleS">S</span>quar<span class="titleE">e</span></h1>
   <div class="loginB">
     {{> loginButtons}}
@@ -13,22 +13,22 @@
 
 <template name="main">
   <div class="row">
-    <div class="highScoreBtn col-xs-4 col-sm-3 col-md-3 col-lg-3">
-      <button type="button" class="btn btn-default" id="highScore_pop" data-placement="bottom">High Scores</button>
+    <div class="highScoreBtn col-xs-4 col-sm-4 col-md-4 col-lg-4">
+      <button type="button" class="btn btn-default" id="highScore_pop" style="width: 125%; font-size: 12px; font-weight: bold; " data-placement="bottom">High Score</button>
       <!-- Highscore content -->
       <div id="highScore_content" style="display: none">
          <div>{{> highScore}}</div>
       </div>
     </div>
     <!-- Your current score -->
-    <div class="col-xs-4" style="text-align: center; line-height: 35px;">Score: {{user.score}}</div>
+    <div class="scoreTop col-xs-4" style="text-align: center; line-height: 35px;">Score: {{user.score}}</div>
     <!-- Help and instructables -->
     <div class="col-xs-4">Help</div>
   </div>
 
-  <p>{{Num1}} + {{Num2}} = {{counter}}</p>
+  <p class="equationTop">{{Num1}} + {{Num2}} = {{counter}}</p>
   
-  <p>{{myTimer}}</p>
+  <p class="myTimerTop">{{myTimer}}</p>
   <div class="gbuttonsdiv">
     {{> buttons}}
   </div>
@@ -49,10 +49,30 @@
 </template>
 
 <template name="buttons">
-  <div><button class="start btn span12">Start!</button></div>
-  <button class="button1 btn-custom1 gbuttons">1</button>
-  <button class="button2 btn-custom2 gbuttons">2</button>
+  <div><button class="start btn">Start!</button></div>
+  <div class="row">
+    <div class="box col-xs-6">
+      <div class="content">
+        <button class="button1 btn-custom1 gbuttons">1</button>
+      </div>
+    </div>
+    <div class="box col-xs-6">
+      <div class="content">
+        <button class="button2 btn-custom2 gbuttons">2</button>
+      </div>
+    </div>
+  </div>
   <br class="padder">
-  <button class="button3 btn-custom3 gbuttons">3</button>
-  <button class="button4 btn-custom4 gbuttons">4</button>
+  <div class="row" style="margin-top: -20px">
+    <div class="box col-xs-6">
+      <div class="content">
+        <button class="button3 btn-custom3 gbuttons">3</button>
+      </div>
+    </div>
+    <div class="box col-xs-6">
+      <div class="content">
+        <button class="button4 btn-custom4 gbuttons">4</button>
+      </div>
+    </div>
+  </div>
 </template>

@@ -1,8 +1,8 @@
 /* CSS declarations go here */
 
 /*Primary area*/
-div.container {
-	width: 767px;
+body.container {
+	background-color: black;
 }
 
 /*Title/Header area*/
@@ -31,6 +31,25 @@ div.loginB {
 	text-align: center;
 }
 
+p.equationTop {
+	text-align: center;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	font-weight: bold;
+	font-size: 20px;
+	color: #24748F;
+}
+
+div.scoreTop {
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	font-weight: bold;
+	color: #24748F;
+}
+
+p.myTimerTop {
+  text-align: center;
+  color: #24748F;
+  font-weight: bold;
+}
 
 /*Game buttons and start button*/
 .btn-custom1 {
@@ -110,9 +129,27 @@ div.startSpan {
 }
 
 button.gbuttons {
-	height: 250px;
-	width: 250px;
-	margin-right: -4px;
+  height: 100%;
+	width: 100%;
+}
+
+div.box {
+  position: relative;
+  width: 50%;
+}
+
+div.box:before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+
+div.content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 
 div.gbuttonsdiv {
