@@ -2,7 +2,8 @@
 
 /*Primary area*/
 body.container {
-	background-color: black;
+	background-color: #faf8ef;
+  max-width: 800px;
 }
 
 /*Title/Header area*/
@@ -23,7 +24,7 @@ span.titleS {
 	color: #D49F2C;
 }
 
-span.titleE {
+span.titleSs {
 	color: #307821;
 }
 
@@ -48,6 +49,11 @@ div.scoreTop {
 p.myTimerTop {
   text-align: center;
   color: #24748F;
+  font-weight: bold;
+}
+
+p.help_title {
+  text-align: center;
   font-weight: bold;
 }
 
@@ -135,7 +141,6 @@ button.gbuttons {
 
 div.box {
   position: relative;
-  width: 50%;
 }
 
 div.box:before {
